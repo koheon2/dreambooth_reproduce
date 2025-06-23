@@ -10,20 +10,26 @@ pip install -r requirements.txt
 ```
 dreambooth_project/
 ├── configs/
-│   ├── base.yaml        # 학습 config
-│   └── infer.yaml       # 추론 config
+│   ├── base.yaml        # train config
+│   ├── infer.yaml       # inference config
+│   ├── base_cap.yaml       # captioned train config
+│   └── infer_cap.yaml       # captioned trained model inference config
 ├── data/
-│   ├── instance/       # 훈련할 이미지 폴더들
+│   ├── instance/       # instance images
 │   │    ├── dog/       
 │   │    └── mug/
-│   └── class/          # prior preservation loss 위한 자동 생성 이미지 저장 경로
+│   └── class/          # auto generated path for prior preservation loss image  
 │        ├── dog/
 │        └── mug/
-├── scripts/
-│   ├── train_dreambooth.py
-│   └── inference.py
-└── outputs/
-    └── (실험별 폴더 자동 생성)
+├── original_paper_experiments/    #codes for reproducting original dreambooth experiments
+├── our_own_experiments/    #codes for our own experiments
+├── outputs/
+│   └── (auto generated paths)
+├── generate_captions.py #inference with image captioned prompt model
+├── inference.py        #inference 
+├── train_captioned.py  #train with image captioned prompt
+└── train.py            #train 
+
 ```
 3. train
 
@@ -62,3 +68,16 @@ inference:
 실험별 폴더/이미지명 자동 관리
 
 기타 등등...
+
+
+## 📁 Dataset Information
+
+This implementation uses the official dataset provided by the authors of the DreamBooth paper:
+
+**Repository:** https://github.com/google/dreambooth-dataset  
+**Paper:** [DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation (CVPR 2023)](https://arxiv.org/abs/2208.12242)
+
+The dataset includes 30 subjects across 15 different classes, as used in the paper.
+
+Some images were captured by the authors, and others were sourced from [Unsplash](https://unsplash.com).  
+Attribution and license information is provided in:
