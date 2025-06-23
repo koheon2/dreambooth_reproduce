@@ -1,0 +1,49 @@
+experiment_name: backpack_rc_sd15_bf16_202405  # 실험명(폴더명 등으로 사용)
+experiment_desc: DreamBooth 실험, bf16, prior loss, 텍스트 인코더 훈련  # 실험 상세설명 (optional)
+output_root: outputs  # 전체 실험 결과 루트 폴더
+
+resolution: 512            
+train_batch_size: 1        # 학습 미니배치 크기s
+max_train_steps: 1600      # 학습 총 step 수 (step 단위가 기준)
+learning_rate: 5e-6        # AdamW learning rate
+seed: 42                   # 재현을 위한 seeds
+bf16: true                 # bf16 (True) or fp32 (False) 학습 선택
+save_ckpt_steps: 400       # 몇 step마다 checkpoint 저장
+
+instance_data_dir: data/instance/backpack    # 인스턴스 이미지 폴더 경로
+class_data_dir: data/class/backpack          # class 이미지 폴더 경로
+instance_prompt: "a photo of sks backpack"   # 인스턴스 프롬프트 (학습 시 사용)
+class_prompt: "a photo of a backpack"        # 클래스 프롬프트 (class 이미지 생성 시 사용)
+num_class_images: 200                   # class 이미지 총 갯수(부족하면 자동 생성)
+with_prior_preservation: true           # prior preservation loss 사용 여부
+prior_loss_weight: 1.0                  # prior loss 가중치
+guidance_scale: 7.5   # (기본값: 7.5, 일반적으로 5~12 사이 사용)
+
+train_text_encoder: true         # 텍스트 인코더 파인튜닝 여부 (false면 고정)
+validation_steps: 800            # validation 이미지 몇 step마다 생성/저장
+validation_scheduler: pndm   # validation에 사용할 샘플러(ddim, dpm, euler 등)
+num_validation_images: 4         # validation 때 몇 장의 이미지를 생성할지
+validation_prompt: "a photo of sks backpack"   # validation 시 사용할 프롬프트
+validation_num_inference_steps: 30   #  validation 이미지 생성시 샘플링 스텝
+center_crop: false               # Center crop or random crop (입력 이미지 전처리)
+resume_from_checkpoint: "outputs/backpack_rc_sd15_bf16_202405/checkpoint_400.pt"       # (옵션) 체크포인트에서 resume할 경우 경로 입력
+
+prior_loss_weight: 1.0
+ablation_type: random_class_noun         # options: none, no_class_noun, random_class_noun
+class_noun_pool:             # only needed if random_class_noun
+  - dog
+  - cat
+  - car
+  - toy
+  - toy
+  - bouwl 
+  - can
+  - candle
+  - clock
+  - sneaker
+  - toy
+  - boot
+  - glasses
+  - cartoon
+  - teapot
+  - vase

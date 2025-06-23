@@ -1,0 +1,32 @@
+experiment_name: bowl
+output_root: outputs
+sd_model: runwayml/stable-diffusion-v1-5
+
+subjects:
+  - name: bowl
+    instance_data_dir: data/instance/bowl
+    class_data_dir: data/class/bowl
+    instance_prompt: "a photo of a sks bowl"
+    class_prompt: "a photo of a bowl"
+    num_class_images: 300
+
+resolution: 512           
+train_batch_size: 1       # 배치 크기
+max_train_steps: 2000     # 학습 총 step 수
+learning_rate: 5e-6       # AdamW learning rate
+seed: 42                # 랜덤시드
+bf16: true                # bf16 사용 여부
+save_ckpt_steps: 200      # 체크포인트 저장 주기
+with_prior_preservation: true # prior loss 사용
+prior_loss_weight: 1.0    # prior loss 가중치
+train_text_encoder: true # 텍스트 인코더 학습여부
+validation_steps: 200     # validation 주기
+validation_scheduler: pndm # validation용 샘플러
+num_validation_images: 4  # validation시 생성 이미지 수
+validation_prompt: "a photo of a sks bowl"
+center_crop: false        # center crop 여부
+guidance_scale: 7.5       # guidance scale
+validation_num_inference_steps: 40   # validation inference step
+resume_from_checkpoint: ""
+resume_optimizer: true
+use_augmentation: false

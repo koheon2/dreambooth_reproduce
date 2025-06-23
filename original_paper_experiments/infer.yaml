@@ -1,0 +1,37 @@
+experiment_name: backpack_sd15_bf16_202405  # 실험 폴더명(=학습한 모델 폴더명)
+output_root: outputs                 # 학습한 모델이 저장된 루트 경로
+ckpt_step: 1600                        # 어떤 체크포인트로 생성할지
+
+prompts:
+  - "a photo of sks backpack in the jungle"
+  - "a photo of sks backpack in the snow"
+  - "a photo of sks backpack on the beach"
+  - "a photo of sks backpack on a cobblestone street"
+  - "a photo of sks backpack on top of pink fabric"
+  - "a photo of sks backpack on top of a wooden floor"
+  - "a photo of sks backpack with a city in the background"
+  - "a photo of sks backpack with a mountain in the background"
+  - "a photo of sks backpack with a blue house in the background"
+  - "a photo of sks backpack on top of a purple rug in a forest"
+  - "a photo of sks backpack with a wheat field in the background"
+  - "a photo of sks backpack with a tree and autumn leaves in the background"
+  - "a photo of sks backpack with the Eiffel Tower in the background"
+  - "a photo of sks backpack floating on top of water"
+  - "a photo of sks backpack floating in an ocean of milk"
+  - "a photo of sks backpack on top of green grass with sunflowers around it"
+  - "a photo of sks backpack on top of a mirror"
+  - "a photo of sks backpack on top of the sidewalk in a crowded street"
+  - "a photo of sks backpack on top of a dirt road"
+  - "a photo of sks backpack on top of a white rug"
+  - "a photo of a red sks backpack"
+  - "a photo of a purple sks backpack"
+  - "a photo of a shiny sks backpack"
+  - "a photo of a wet sks backpack"
+  - "a photo of a cube shaped sks backpack"
+
+num_images_per_prompt: 3       # 각 프롬프트마다 생성할 이미지 수
+seed: 1234                     # 생성 seed (고정하면 재현 가능)
+dtype: bf16                    # bf16 또는 fp32 (훈련시 bf16이면 맞추는 것이 안정적)
+guidance_scale: 7.5            # CFG 스케일(기본 7.5)
+num_inference_steps: 30        # sampling step
+scheduler: pndm                # 사용할 샘플러(ddim, dpm, euler 등)

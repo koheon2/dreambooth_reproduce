@@ -1,0 +1,17 @@
+experiment_name: bowl # 실험명 (모델 폴더/결과 구분용)
+model_dir: outputs/bowl    # 학습한 모델의 checkpoint 폴더
+sd_model: runwayml/stable-diffusion-v1-5     # 사전학습 모델
+
+subjects:
+  - name: bowl
+    prompt: "a photo of a sks bowl"
+
+output_dir: outputs/bowl/infer   # 결과 이미지 저장 폴더
+
+ckpt_step: 1500              #사용할 체크포인트 지정
+num_inference_images: 10      # 각 subject별 생성 이미지 수
+scheduler: pndm             # 샘플러(euler, dpm, pndm, ddim 등)
+inference_timestep: 40       # 생성용 sampling step 수
+guidance_scale: 7.5          # 가이던스 스케일
+seed: 42                     # 생성용 시드
+bf16: true                  # bf16 inference 사용 
