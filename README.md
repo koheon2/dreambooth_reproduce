@@ -34,7 +34,7 @@ dreambooth_project/
 ```
 3. train
 
-1.configs setting (configs/base.yaml)
+configs setting (configs/base.yaml)
 ```
 python train.py --config_base path/to/config.yaml
 ex) python train.py --config_base configs/base.yaml
@@ -44,8 +44,8 @@ The output folder name is determined by the experiment_name specified in the YAM
 
 4. train with prompting(our improvement code)
 
-1.configs setting (configs/base_cap.yaml)
-2.make metadata.jsonl (ex: data/instance/teapot/metadata.jsonl)
+configs setting (configs/base_cap.yaml)
+make metadata.jsonl (ex: data/instance/teapot/metadata.jsonl)
 ```
 {"file_name": "00.jpg", "text": "a photo of a sks teapot and a rose on a plate"}
 {"file_name": "01.jpg", "text": "a photo of is a sks teapot and a cup on a wooden table"}
@@ -70,9 +70,9 @@ python train_captioned.py --config_base path/to/configs.yaml
 ex) python train_captioned.py --config_base configs/base_cap.yaml
 ```
 
-6. inference
+5. inference
  
-1.configs setting (configs/infer.yaml)
+configs setting (configs/infer.yaml)
 ```
 python inference.py --config_base path/to/config.yaml
 ex) python inference.py --config_base configs/infer.yaml
