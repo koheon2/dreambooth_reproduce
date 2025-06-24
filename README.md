@@ -1,12 +1,12 @@
 사용법
-1. 환경 준비
+1. environment settings
+   our reproduce is conducted with miniconda
 ```
-# miniconda 환경 예시
 conda create -n dreambooth python=3.10
 conda activate dreambooth
 pip install -r requirements.txt
 ```
-2. 폴더 구조
+2. file structure
 ```
 dreambooth_project/
 ├── configs/
@@ -33,42 +33,49 @@ dreambooth_project/
 ```
 3. train
 
-먼저 학습용 config 작성 (예시: configs/base.yaml)
+1.configs setting (configs/base.yaml)
 ```
-python -m scripts.train_dreambooth --config_base yaml파일경로
-ex) python -m scripts.train_dreambooth --config_base configs/base.yaml
+python train.py --config_base path/to/config.yaml
+ex) python train.py --config_base configs/base.yaml
+```
+Checkpoints and validation images will be automatically saved under the outputs/ directory.
+The output folder name is determined by the experiment_name specified in the YAML config.
 
-outputs/폴더/ 경로에 체크포인트, validation 이미지가 자동 생성. 폴더 이름은 yaml에서 지정되는 experiment_name으로 설정됨
+4. train with prompting(our improvement code)
+
+1.configs setting (configs/base_cap.yaml)
+2.make metadata.jsonl (ex: data/instance/teapot/metadata.jsonl)
+```
+{"file_name": "00.jpg", "text": "a photo of a sks teapot and a rose on a plate"}
+{"file_name": "01.jpg", "text": "a photo of is a sks teapot and a cup on a wooden table"}
+{"file_name": "02.jpg", "text": "a photo of is a sks teapot and a cup on a table"}
+{"file_name": "03.jpg", "text": "a photo of is a sks teapot and a cup on a table"}
+{"file_name": "04.jpg", "text": "a photo of is a sks teapot and a cup on a table"}
+```
+it can be generated with BLIP captioning
+```
+python generate_captions.py --image_dir path/to/subject_dir
+ex) python generate_captions.py --image_dir data/instance/teapot
+```
+캡셔닝 generate 후에 metadata.jsonl 파일에 identifier(ex: sks)를 추가하고, CLIP 인코더에 적합하게 a photo of 로 시작하도록 수정
+```
+{"file_name": "01.jpg", "text": "there is a tea pot and a cup on a wooden table"}
+=>
+{"file_name": "01.jpg", "text": "a photo of is a sks teapot and a cup on a wooden table"}
+```
+이후 다음 코드로 train 한다.
+```
+python train_captioned.py --config_base path/to/configs.yaml
+ex) python train_captioned.py --config_base configs/base_cap.yaml
 ```
 
-4. 이미지 생성 (inference)
+6. inference
  
-먼저 inference용 config 작성 (예시: configs/infer.yaml)
+1.configs setting (configs/infer.yaml)
 ```
-python -m scripts.inference --config_infer yaml파일경로
-ex) python -m scripts.inference --config_infer configs/infer.yaml
-
-outputs/사용한 체크포인트가 있는 폴더/inference/ 경로로 이미지 저장
+python inference.py --config_base path/to/config.yaml
+ex) python inference.py --config_base configs/infer.yaml
 ```
-5. 코드 주요 구조
-
-config 파일로 모든 실험 파라미터 관리 (실험 자동화, reproducibility)
-
-data/instance/prompts_and_classes.txt에 연구자들이 사용했던 프롬프트가 저장되어 있음. 
-이 프롬프트는 imagen 기준이라서 stable diffusion의 clip에 적합한 프롬프트로 해야 성능이 더 잘 나올것 같아요.
-
-train:
-
-validation 기능은 훈련이 잘 되고 있는지 훈련 중간에 이미지 생성해서 체크하는 기능.
-
-inference:
-
-원하는 checkpoint로, 여러 prompt/seed/batch/샘플러 실험 지원
-
-실험별 폴더/이미지명 자동 관리
-
-기타 등등...
-
 
 ## 📁 Dataset Information
 
