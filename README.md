@@ -1,6 +1,7 @@
 사용법
 1. environment settings
-   our reproduce is conducted with miniconda
+
+Our reproduction was conducted using Miniconda.
 ```
 conda create -n dreambooth python=3.10
 conda activate dreambooth
@@ -52,18 +53,18 @@ The output folder name is determined by the experiment_name specified in the YAM
 {"file_name": "03.jpg", "text": "a photo of is a sks teapot and a cup on a table"}
 {"file_name": "04.jpg", "text": "a photo of is a sks teapot and a cup on a table"}
 ```
-it can be generated with BLIP captioning
+It can be generated using BLIP captioning.
 ```
 python generate_captions.py --image_dir path/to/subject_dir
 ex) python generate_captions.py --image_dir data/instance/teapot
 ```
-캡셔닝 generate 후에 metadata.jsonl 파일에 identifier(ex: sks)를 추가하고, CLIP 인코더에 적합하게 a photo of 로 시작하도록 수정
+After generating captions, we post-process the metadata.jsonl file by adding an identifier (e.g., sks) to each entry and modifying the captions to begin with "a photo of" to ensure compatibility with the CLIP encoder.
 ```
 {"file_name": "01.jpg", "text": "there is a tea pot and a cup on a wooden table"}
 =>
 {"file_name": "01.jpg", "text": "a photo of is a sks teapot and a cup on a wooden table"}
 ```
-이후 다음 코드로 train 한다.
+Then, start training using the following command:.
 ```
 python train_captioned.py --config_base path/to/configs.yaml
 ex) python train_captioned.py --config_base configs/base_cap.yaml
