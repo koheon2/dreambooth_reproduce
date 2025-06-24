@@ -1,4 +1,4 @@
-사용법
+
 1. environment settings
 
 Our reproduction was conducted using Miniconda.
